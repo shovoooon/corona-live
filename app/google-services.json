@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "956933232985",
+    "firebase_url": "https://corona-live-covid19.firebaseio.com",
+    "project_id": "corona-live-covid19",
+    "storage_bucket": "corona-live-covid19.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:956933232985:android:95582b1fb9119d5a5fd448",
+        "android_client_info": {
+          "package_name": "com.shovon.coronalive"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "956933232985-2t7srpcot28b61knlb08b6ggh07b1ijv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAM2GvvujX80y-v2cxwfguPPJ127cV8CGM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "956933232985-2t7srpcot28b61knlb08b6ggh07b1ijv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

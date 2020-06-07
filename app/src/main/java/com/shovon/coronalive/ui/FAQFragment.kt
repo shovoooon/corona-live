@@ -21,12 +21,15 @@ import kotlinx.android.synthetic.main.faq_fragment.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.ArrayList
 
 
 class FAQFragment : Fragment() {
 
     companion object {
         fun newInstance() = FAQFragment()
+        private val listFaq = ArrayList<FaqResponse>()
+        private lateinit var adapter: FaqAdapter
     }
 
     private lateinit var viewModel: FaqViewModel
@@ -41,6 +44,7 @@ class FAQFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(FaqViewModel::class.java)
+        setUpRecyclerView()
 
         if (isOnline(activity!!)){
             fetchFaq("corona")
@@ -69,6 +73,12 @@ class FAQFragment : Fragment() {
 
     }
 
+    private fun setUpRecyclerView() {
+        adapter = FaqAdapter(activity!!, listFaq)
+        rv_faq.layoutManager = LinearLayoutManager(activity!!)
+        rv_faq.hasFixedSize()
+        rv_faq.adapter = adapter
+    }
 
 
     private fun fetchFaq(table:String){
@@ -84,10 +94,10 @@ class FAQFragment : Fragment() {
                     response: Response<List<FaqResponse>>
                 ) {
                     try {
-                        val faqs = response.body()
-                        faqs?.let {
-                            showCountries(it)
-                        }
+                        listFaq.clear()
+                        listFaq.addAll(response.body()!!)
+                        adapter.notifyDataSetChanged()
+
                     }catch (e:Exception){ Log.v("error", e.message!!)}
 
                 }
@@ -95,12 +105,5 @@ class FAQFragment : Fragment() {
             })
     }
 
-    private fun showCountries(faq: List<FaqResponse>) {
-        try {
-            rv_faq.layoutManager = LinearLayoutManager(activity)
-            rv_faq.adapter = FaqAdapter(activity, faq)
-        }catch (e:Exception){ Log.v("error", e.message!!)}
-
-    }
 
 }

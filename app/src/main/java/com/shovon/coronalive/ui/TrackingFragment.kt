@@ -252,8 +252,6 @@ class TrackingFragment : Fragment() , ContactsAdapter.OnItemClicked {
         }
             rv_contacts.adapter =
                 ContactsAdapter(activity!!, contactList, this)
-
-
     }
 
     override fun onDeleteClicked(id: Int) {

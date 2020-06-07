@@ -2,31 +2,29 @@ package com.shovon.coronalive
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.PorterDuff
-import android.graphics.drawable.Drawable
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
+import android.text.format.DateFormat
 import android.util.Log
 import android.view.Menu
-import android.view.View
-import android.view.Window
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.google.android.material.tabs.TabLayout
+import com.bumptech.glide.Glide
 import com.shovon.coronalive.adapter.ViewPagerAdapter
-import com.shovon.coronalive.model.SearchResponse
+import com.shovon.coronalive.model.Search
 import com.shovon.coronalive.network.MyService
 import com.shovon.coronalive.network.RetrofitClient
 import com.shovon.coronalive.ui.*
@@ -36,6 +34,7 @@ import kotlinx.android.synthetic.main.dialog.view.tv_dialogCountry
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -106,7 +105,7 @@ class MainActivity : AppCompatActivity() {
         searchView.setOnQueryTextListener(object :androidx.appcompat.widget.SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (query != null) {
-                    fetchSearch(query)
+                    search(query)
                 }
                 return false
             }
@@ -124,26 +123,21 @@ class MainActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
-    private fun fetchSearch(query: String) {
+    private fun search(query: String) {
+        progress_bar.visibility = VISIBLE
 
-        progress_bar.visibility = View.VISIBLE
-
-        RetrofitClient.instance.searchInfo(query)
-            .enqueue(object :Callback<SearchResponse>{
-                override fun onFailure(call: Call<SearchResponse>, t: Throwable) {
-                    progress_bar.visibility = View.GONE
+        RetrofitClient.instance.search(query)
+            .enqueue(object :Callback<Search>{
+                override fun onFailure(call: Call<Search>, t: Throwable) {
+                    progress_bar.visibility = GONE
                     toast(this@MainActivity, getString(R.string.error_msg))
                 }
 
-                override fun onResponse(
-                    call: Call<SearchResponse>,
-                    response: Response<SearchResponse>
-                ) {
-
-                    progress_bar.visibility = View.GONE
-
+                override fun onResponse(call: Call<Search>, response: Response<Search>) {
+                    progress_bar.visibility = GONE
                     if (response.body()?.country != null){
                         val mView = layoutInflater.inflate(R.layout.dialog, null)
+                        Glide.with(this@MainActivity).load(response.body()?.countryInfo?.flag.toString()).into(mView.dialogFlag)
                         mView.tv_dialogCountry.text = response.body()?.country
                         mView.tv_dialogTotalCases.text = response.body()?.cases.toString()
                         mView.tv_dialogTodayCases.text = response.body()?.todayCases.toString()
@@ -157,6 +151,16 @@ class MainActivity : AppCompatActivity() {
                         val totalDeath = response.body()?.deaths!!.toString()
                         val deathRate = String.format("%.2f", ((totalDeath.toFloat() * 100) / totalCases.toFloat()))
                         mView.tv_dialogDRate.text = deathRate.toString()+"%"
+
+                        mView.tv_dialogTPerM.text = response.body()?.testsPerOneMillion.toString()
+                        mView.tv_dialogTested.text = response.body()?.tests.toString()
+
+                        val cal = Calendar.getInstance(Locale.ENGLISH)
+                        cal.timeInMillis = response.body()?.updated!!
+                        val date =
+                            DateFormat.format("dd MMMM yyyy hh:mm a", cal).toString()
+                        mView.dialog_update.text = "Updated: $date"
+
                         val dialog = Dialog(this@MainActivity)
                         dialog.setTitle(getString(R.string.app_name))
                         dialog.setCancelable(false)
@@ -170,8 +174,8 @@ class MainActivity : AppCompatActivity() {
                 }
 
             })
-
     }
+
 
 
     override fun onBackPressed() {

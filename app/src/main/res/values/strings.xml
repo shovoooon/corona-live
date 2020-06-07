@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Corona Live</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+    <string name="error_msg">Something went wrong</string>
+    <string name="share_msg">Get live update of Corona Virus track your family members. Install now:-  https://bit.ly/3b7Ck5Q</string>
+    <string name="title_activity_maps">Corona Live Family Tracking</string>
+    <string name="no_contacts_added">No contacts added... \n Please add contacts to get his/her location \n \n NB: Your family members must register and use this app to get location</string>
+</resources>

@@ -21,11 +21,11 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-class ContactsAdapter(val context: FragmentActivity?, private val product: List<ContactsDataModel>, private val onItemClicked: OnItemClicked) : RecyclerView.Adapter<ContactsAdapter.MyViewHolder>() {
+class ContactsAdapter(
+    val context: FragmentActivity?,
+    private val product: List<ContactsDataModel>,
+    private val onItemClicked: OnItemClicked) : RecyclerView.Adapter<ContactsAdapter.MyViewHolder>() {
 
-    companion object {
-        val TAG: String = ContactsAdapter::class.java.simpleName
-    }
 
     interface OnItemClicked {
         fun onDeleteClicked(id: Int)

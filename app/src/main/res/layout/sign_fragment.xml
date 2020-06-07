@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.SignFragment">
+
+    <RelativeLayout
+        android:id="@+id/layoutSign"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:padding="20dp">
+
+        <ImageView
+            android:id="@+id/image_view_logo"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/virus" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/image_view_logo">
+
+            <LinearLayout
+                android:id="@+id/linearLayout1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    app:fontFamily="casual"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Family Tracking"
+                    android:textAllCaps="false"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textStyle="bold"
+                    android:typeface="monospace" />
+
+                <TextView
+                    app:fontFamily="cursive"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="track your family members"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:textColor="@color/colorPrimary" />
+
+                <EditText
+                    android:id="@+id/etName"
+                    android:hint="Enter nickname"
+                    android:inputType="textPersonName"
+                    android:drawablePadding="16dp"
+                    android:drawableStart="@drawable/ic_account_circle"
+                    android:background="@drawable/et_round_bg"
+                    android:layout_width="match_parent"
+                    android:padding="12dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="12dp"
+                    android:layout_height="wrap_content"/>
+                <EditText
+                    android:id="@+id/etPhone"
+                    android:hint="+880111111111"
+                    android:text="+880"
+                    android:inputType="phone"
+                    android:drawablePadding="16dp"
+                    android:drawableStart="@drawable/ic_local_phone"
+                    android:background="@drawable/et_round_bg"
+                    android:layout_width="match_parent"
+                    android:padding="12dp"
+                    android:layout_margin="12dp"
+                    android:layout_height="wrap_content"/>
+
+                <Button
+                    android:id="@+id/btnSign"
+                    android:layout_gravity="center_horizontal"
+                    android:textAllCaps="false"
+                    android:text="Get Started"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.Button"
+                    android:textColor="@android:color/white"
+                    android:textSize="12dp"
+                    android:layout_margin="10dp"/>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </RelativeLayout>
+
+</RelativeLayout>

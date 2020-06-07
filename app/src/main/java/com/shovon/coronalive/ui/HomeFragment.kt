@@ -29,23 +29,19 @@ import retrofit2.Response
 
 class HomeFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = HomeFragment()
-    }
-
     private lateinit var viewModel: HomeViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         return inflater.inflate(R.layout.home_fragment, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
-
 
         refreshLayout.setOnRefreshListener {
             if (isOnline(activity!!)) {
@@ -124,6 +120,7 @@ class HomeFragment : Fragment() {
         RetrofitClient.instance.worldInfo("")
             .enqueue(object : Callback<WorldResponse> {
                 override fun onFailure(call: Call<WorldResponse>, t: Throwable) {
+                    Log.v("error_home", t.message.toString())
                     Toast.makeText(activity, getString(R.string.error_msg), Toast.LENGTH_SHORT)
                         .show()
                 }

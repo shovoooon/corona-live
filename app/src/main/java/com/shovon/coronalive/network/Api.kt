@@ -11,17 +11,30 @@ fun worldInfo(
     @Field("all") all:String
 ):Call<WorldResponse>
 
+
     @FormUrlEncoded
     @POST("corona/index.php")
     fun countriesInfo(
-        @Field("countries") countries:String
+        @Field("country") country:String
     ):Call<List<CountriesResponse>>
+
+    @FormUrlEncoded
+    @POST("corona/index.php")
+    fun states(
+        @Field("states") states:String
+    ):Call<List<States>>
 
     @FormUrlEncoded
     @POST("corona/index.php")
     fun searchInfo(
         @Field("countryName") countryName:String
     ):Call<SearchResponse>
+
+    @FormUrlEncoded
+    @POST("corona/index.php")
+    fun search(
+        @Field("search") search:String
+    ):Call<Search>
 
     @FormUrlEncoded
     @POST("corona/faq.php")
